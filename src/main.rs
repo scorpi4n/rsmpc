@@ -1,7 +1,8 @@
 use std::{io, net::TcpStream};
 
-use crate::tui::App;
+use app::App;
 
+mod app;
 mod config;
 mod tui;
 
