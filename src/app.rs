@@ -4,7 +4,7 @@ use crossterm::event::{self, Event, KeyCode, KeyEvent};
 
 use crate::{
     fps_to_duration,
-    tui::{screens::NowPlayingScreen, Tui},
+    ui::{screens::NowPlayingScreen, Tui},
 };
 
 #[derive(Default)]
