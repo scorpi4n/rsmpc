@@ -1,4 +1,4 @@
-use std::{io, net::TcpStream};
+use std::{io, net::TcpStream, time::Duration};
 
 use app::App;
 
@@ -15,4 +15,23 @@ fn main() -> io::Result<()> {
     result
 
     // todo!("implement rsmpc");
+}
+
+fn fps_to_duration(fps: u16) -> Duration {
+    Duration::from_millis((1_000 / fps).into())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_fps_to_duration() {
+        assert_eq!(fps_to_duration(30), Duration::from_millis(33));
+        assert_eq!(fps_to_duration(60), Duration::from_millis(16));
+        assert_eq!(fps_to_duration(90), Duration::from_millis(11));
+        assert_eq!(fps_to_duration(120), Duration::from_millis(8));
+        assert_eq!(fps_to_duration(144), Duration::from_millis(6));
+        assert_eq!(fps_to_duration(240), Duration::from_millis(4));
+    }
 }

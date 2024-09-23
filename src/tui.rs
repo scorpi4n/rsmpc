@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // TODO: remove allow
 #![allow(clippy::single_match, clippy::default_constructed_unit_structs)]
 
@@ -23,6 +24,17 @@ use ratatui::{
 
 use self::widgets::{Header, ProgressBar};
 
+=======
+use std::io::{self, Stdout};
+
+use crossterm::{
+    terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
+    ExecutableCommand,
+};
+use ratatui::{backend::CrosstermBackend, Terminal};
+
+pub mod screens;
+>>>>>>> 5533156 (feat: move code to new modules)
 mod widgets;
 
 pub type Tui = Terminal<CrosstermBackend<Stdout>>;
@@ -40,6 +52,7 @@ pub fn restore() -> io::Result<()> {
 
     Ok(())
 }
+<<<<<<< HEAD
 
 #[derive(Default)]
 pub struct App {
@@ -104,6 +117,7 @@ impl Widget for &App {
         ProgressBar.render(footer_area, buf);
     }
 }
+<<<<<<< HEAD
 
 fn fps_to_duration(fps: u16) -> Duration {
     Duration::from_millis((1_000 / fps).into())
@@ -125,3 +139,7 @@ mod tests {
         assert_eq!(fps_to_duration(240), Duration::from_millis(4));
     }
 }
+=======
+>>>>>>> 5533156 (feat: move code to new modules)
+=======
+>>>>>>> 61b0f8b (fix: move fps_to_duration function out of tui module)
