@@ -1,15 +1,16 @@
-use ratatui::{
-    prelude::*,
-    widgets::{List, ListState, Widget},
-};
+use ratatui::{prelude::*, widgets::List};
+
+use crate::app::State;
 
 use super::widgets::{Header, ProgressBar};
 
 #[derive(Default)]
 pub struct NowPlayingScreen;
 
-impl Widget for &NowPlayingScreen {
-    fn render(self, area: Rect, buf: &mut Buffer)
+impl StatefulWidget for &NowPlayingScreen {
+    type State = State;
+
+    fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State)
     where
         Self: Sized,
     {
@@ -20,17 +21,21 @@ impl Widget for &NowPlayingScreen {
         ])
         .areas(area);
 
-        // WARN: remove allow
-        #[allow(clippy::default_constructed_unit_structs)]
-        Header::default().render(header_area, buf);
-        let mut list_state = ListState::default();
-        list_state.select_first();
+        Header.render(header_area, buf, state);
         StatefulWidget::render(
-            List::new(["Song 1", "Song 2"]).highlight_symbol("> "),
+            List::new(
+                state
+                    .client
+                    .queue()
+                    .unwrap()
+                    .into_iter()
+                    .map(|song| song.title.unwrap()),
+            )
+            .highlight_symbol("> "),
             body_area,
             buf,
-            &mut list_state,
+            &mut state.list_state,
         );
-        ProgressBar.render(footer_area, buf);
+        ProgressBar.render(footer_area, buf, state);
     }
 }

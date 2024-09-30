@@ -672,6 +672,7 @@ dependencies = [
  "mpd",
  "ratatui",
  "serde",
+ "subst",
 ]
 
 [[package]]
@@ -830,6 +831,16 @@ dependencies = [
  "quote",
  "rustversion",
  "syn",
+]
+
+[[package]]
+name = "subst"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a3c1ba4fd019bc866333a61fe205fc9b686e3cf5971dd8dfc116657d933031c"
+dependencies = [
+ "memchr",
+ "unicode-width",
 ]
 
 [[package]]
