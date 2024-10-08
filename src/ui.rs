@@ -1,4 +1,7 @@
-use std::io::{self, Stdout};
+use std::{
+    io::{self, Stdout},
+    time::Duration,
+};
 
 use crossterm::{
     terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
@@ -40,5 +43,28 @@ impl StatefulWidget for &CurrentScreen {
         match self {
             NowPlaying => NowPlayingScreen.render(area, buf, state),
         }
+    }
+}
+
+fn format_time(time: (Duration, Duration)) -> String {
+    let (elapsed_time, total_time) = time;
+    let elapsed_minutes = elapsed_time.as_secs() / 60;
+    let elapsed_seconds = elapsed_time.as_secs() % 60;
+    let total_minutes = total_time.as_secs() / 60;
+    let total_seconds = total_time.as_secs() % 60;
+
+    format!("{elapsed_minutes}:{elapsed_seconds:02}/{total_minutes}:{total_seconds:02}",)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_format_time() {
+        assert_eq!(
+            format_time((Duration::default(), Duration::from_secs(182))),
+            "0:00/3:02"
+        );
     }
 }
