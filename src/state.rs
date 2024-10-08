@@ -1,7 +1,7 @@
 use mpd::Client;
 use ratatui::widgets::ListState;
 
-use crate::ui::CurrentScreen;
+use crate::ui::Screen;
 
 /// Represents the application's state
 #[derive(Default, Debug)]
@@ -9,7 +9,7 @@ pub struct Model {
     pub should_quit: bool,
     pub client: Client,
     pub list_state: ListState,
-    pub current_screen: CurrentScreen,
+    pub current_screen: Screen,
     pub library_sceen_directory: String,
 }
 
@@ -33,5 +33,5 @@ pub enum Message {
     TogglePause,
     SelectNext,
     SelectPrevious,
-    ChangeScreen(CurrentScreen),
+    ChangeScreen(Screen),
 }

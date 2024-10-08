@@ -37,16 +37,16 @@ pub fn draw(terminal: &mut Tui, state: &mut Model) -> io::Result<()> {
 }
 
 #[derive(Default, Clone, Copy, Debug)]
-pub enum CurrentScreen {
+pub enum Screen {
     #[default]
     NowPlaying,
 }
 
-impl StatefulWidget for CurrentScreen {
+impl StatefulWidget for Screen {
     type State = Model;
 
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State) {
-        use CurrentScreen::*;
+        use Screen::*;
 
         match self {
             NowPlaying => NowPlayingScreen.render(area, buf, state),
