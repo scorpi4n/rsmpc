@@ -1,6 +1,6 @@
 use ratatui::{prelude::*, widgets::List};
 
-use crate::app::State;
+use crate::state::Model;
 
 use super::widgets::{Header, ProgressBar};
 
@@ -8,7 +8,7 @@ use super::widgets::{Header, ProgressBar};
 pub struct NowPlayingScreen;
 
 impl StatefulWidget for &NowPlayingScreen {
-    type State = State;
+    type State = Model;
 
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State)
     where

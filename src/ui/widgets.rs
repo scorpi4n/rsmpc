@@ -1,16 +1,18 @@
 use mpd::State as PlaybackState;
 use ratatui::{layout::Flex, prelude::*, widgets::*};
 
-use crate::{app::State, format_time};
+use crate::state::Model;
+
+use super::format_time;
 
 #[derive(Default)]
 pub struct Header;
 
 impl StatefulWidget for Header {
-    type State = State;
+    type State = Model;
 
     // WARN: using the client in a component's render method sends a lot of requests to the MPD
-    // server
+    // server, so I want to cache responses for about a second
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State) {
         let status = state.client.status().expect("Failed to fetch MPD status");
         let playback_state_str = match status.state {
@@ -95,7 +97,7 @@ impl StatefulWidget for Header {
 pub struct ProgressBar;
 
 impl StatefulWidget for ProgressBar {
-    type State = State;
+    type State = Model;
 
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State) {
         let status = state.client.status().unwrap();

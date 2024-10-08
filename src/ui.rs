@@ -9,7 +9,7 @@ use crossterm::{
 };
 use ratatui::{backend::CrosstermBackend, prelude::*, Terminal};
 
-use crate::{app::State, ui::screens::NowPlayingScreen};
+use crate::{state::Model, ui::screens::NowPlayingScreen};
 
 mod screens;
 mod widgets;
@@ -30,12 +30,20 @@ pub fn restore() -> io::Result<()> {
     Ok(())
 }
 
+pub fn draw(terminal: &mut Tui, state: &mut Model) -> io::Result<()> {
+    terminal
+        .draw(|frame| frame.render_stateful_widget(state.current_screen, frame.area(), state))
+        .map(|_| ())
+}
+
+#[derive(Default, Clone, Copy, Debug)]
 pub enum CurrentScreen {
+    #[default]
     NowPlaying,
 }
 
-impl StatefulWidget for &CurrentScreen {
-    type State = State;
+impl StatefulWidget for CurrentScreen {
+    type State = Model;
 
     fn render(self, area: Rect, buf: &mut Buffer, state: &mut Self::State) {
         use CurrentScreen::*;
