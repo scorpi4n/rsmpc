@@ -25,17 +25,19 @@ impl StatefulWidget for Header {
             .client
             .currentsong()
             .expect("Failed to fetch current song from MPD");
+        let volume_str = format!("Volume: {}%", status.volume);
+        // TODO: replace with data from state
+        let toggles_str = "[---c--]";
 
         Block::new()
             .borders(Borders::BOTTOM)
             .border_style(Color::DarkGray)
             .render(area, buf);
 
-        // TODO: make this resize better, it looks awful at smaller widths
         let horizontal_layout = Layout::horizontal([
-            Constraint::Percentage(10),
-            Constraint::Percentage(80),
-            Constraint::Percentage(10),
+            Constraint::Length(elapsed_playback_str.len().max(playback_state_str.len()) as u16),
+            Constraint::Percentage(100),
+            Constraint::Length(volume_str.len().max(toggles_str.len()) as u16),
         ])
         .flex(Flex::SpaceBetween);
 
@@ -51,9 +53,7 @@ impl StatefulWidget for Header {
         }))
         .centered()
         .render(top_center, buf);
-        Line::raw(format!("Volume: {}%", status.volume))
-            .right_aligned()
-            .render(top_right, buf);
+        Line::raw(volume_str).right_aligned().render(top_right, buf);
         Line::raw(format!("[{}]", playback_state_str)).render(bottom_left, buf);
         // TODO: Use string templating with subst, currently looks weird without a song playing
         Line::from_iter([
@@ -87,8 +87,7 @@ impl StatefulWidget for Header {
         ])
         .centered()
         .render(bottom_center, buf);
-        // TODO: replace with data from state
-        Line::raw("[---c--]")
+        Line::raw(toggles_str)
             .right_aligned()
             .render(bottom_right, buf);
     }
