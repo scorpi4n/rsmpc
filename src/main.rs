@@ -7,7 +7,6 @@ use std::{
 use crossterm::event::{self, Event, KeyCode, KeyEvent};
 use state::{Message, Model};
 
-mod config;
 mod state;
 mod ui;
 
