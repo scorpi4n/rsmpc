@@ -8,6 +8,7 @@ use crossterm::{
     ExecutableCommand,
 };
 use ratatui::{backend::CrosstermBackend, prelude::*, Terminal};
+use screens::LibraryScreen;
 
 use crate::{state::Model, ui::screens::NowPlayingScreen};
 
@@ -40,6 +41,7 @@ pub fn draw(terminal: &mut Tui, state: &mut Model) -> io::Result<()> {
 pub enum Screen {
     #[default]
     NowPlaying,
+    Library,
 }
 
 impl StatefulWidget for Screen {
@@ -50,6 +52,7 @@ impl StatefulWidget for Screen {
 
         match self {
             NowPlaying => NowPlayingScreen.render(area, buf, state),
+            Library => LibraryScreen.render(area, buf, state),
         }
     }
 }

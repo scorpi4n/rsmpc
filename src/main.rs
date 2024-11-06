@@ -6,6 +6,7 @@ use std::{
 
 use crossterm::event::{self, Event, KeyCode, KeyEvent};
 use state::{Message, Model};
+use ui::Screen;
 
 mod state;
 mod ui;
@@ -55,6 +56,10 @@ fn handle_event(event: Event) -> Option<Message> {
             KeyCode::Char('p') => Some(Message::TogglePause),
             KeyCode::Char('d') => todo!("delete selected"),
             KeyCode::Esc => todo!("deselect"),
+
+            KeyCode::Char('1') => Some(Message::ChangeScreen(Screen::NowPlaying)),
+            KeyCode::Char('2') => Some(Message::ChangeScreen(Screen::Library)),
+
             _ => None,
         }
     } else {
